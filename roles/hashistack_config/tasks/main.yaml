@@ -1,3 +1,17 @@
+- name: clean out all datadirs
+  file: path="{{ item }}" state=absent
+  when: destroy is defined
+  with_items:
+    - /opt/consul/data
+    - /opt/nomad/data
+    
+- name: clean out all datadirs
+  file: path="{{ item }}" state=directory
+  when: destroy is defined
+  with_items:
+    - /opt/consul/data
+    - /opt/nomad/data
+
 - name: setup consul templates
   template: src="{{ item }}" dest="/etc/nomad.d"
   notify: restart consul
