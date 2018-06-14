@@ -20,7 +20,7 @@
     - consul-server.json
 
 - name: join consul cluster
-  shell: consul join {{ hostvars[item]['ansible_default_ipv4']['address'] }}:8301
+  shell: /usr/local/bin/consul join {{ hostvars[item]['ansible_default_ipv4']['address'] }}:8301
   with_items: "{{ play_hosts }}"
   run_once: true
 
