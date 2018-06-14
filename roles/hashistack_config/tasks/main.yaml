@@ -5,7 +5,7 @@
 
 - name: setup consul templates
   template: src="consul/{{ item }}" dest="/etc/consul.d"
-  notify: reload consul
+  notify: restart consul
   with_items:
     - consul-default.json
     - consul-server.json
