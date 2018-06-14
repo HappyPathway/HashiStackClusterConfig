@@ -1,23 +1,16 @@
-- name: clean out all datadirs
-  file: path="{{ item }}" state=absent
-  when: destroy is defined
-  with_items:
-    - /opt/consul/data
-    - /opt/nomad/data
-    
-- name: clean out all datadirs
-  file: path="{{ item }}" state=directory
-  when: destroy is defined
-  with_items:
-    - /opt/consul/data
-    - /opt/nomad/data
 
+- name: clean out directories
+  include: clean.yaml
+  when: destroy is defined
+  
 - name: setup consul templates
   template: src="consul/{{ item }}" dest="/etc/consul.d"
   notify: restart consul
   with_items:
     - consul-default.json
     - consul-server.json
+
+- meta: flush_handlers
 
 - name: join consul cluster
   shell: /usr/local/bin/consul join {{ hostvars[item]['ansible_default_ipv4']['address'] }}:8301
