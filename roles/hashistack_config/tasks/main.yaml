@@ -13,7 +13,7 @@
     - /opt/nomad/data
 
 - name: setup consul templates
-  template: src="{{ item }}" dest="/etc/nomad.d"
+  template: src="consul/{{ item }}" dest="/etc/nomad.d"
   notify: restart consul
   with_items:
     - consul-default.json
@@ -25,14 +25,14 @@
   run_once: true
 
 - name: setup vault templates
-  template: src="{{ item }}" dest="/etc/nomad.d"
+  template: src="vault/{{ item }}" dest="/etc/nomad.d"
   notify: restart vault
   with_items:
     - vault-consul.hcl
     - vault-no-tls.hcl
     
 - name: setup vault templates
-  template: src="{{ item }}" dest="/etc/nomad.d"
+  template: src="nomad/{{ item }}" dest="/etc/nomad.d"
   notify: restart nomad
   with_items:
     - nomad-client.hcl
